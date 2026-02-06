@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Proposal</title>
+<style>
+body {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  text-align: center;
+  background-color: #ffe6f0;
+  margin-top: 50px;
+  overflow: hidden;
+}
+.character {
+  font-size: 80px;
+  animation: bounce 2s infinite;
+}
+h1 {
+  color: #d6336c;
+  font-size: 36px;
+  margin-top: 20px;
+}
+.buttons {
+  margin-top: 30px;
+}
+button {
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 10px;
+  transition: all 0.3s ease;
+}
+.yes {
+  background-color: #4CAF50;
+  color: white;
+}
+.no {
+  background-color: #f44336;
+  color: white;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+.heart {
+  position: absolute;
+  font-size: 24px;
+  color: #ff3366;
+  animation: floatUp 3s forwards;
+  pointer-events: none;
+}
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
+}
+.message {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  color: #d6336c;
+  font-size: 24px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  animation: fall 3s forwards;
+}
+@keyframes fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(500px) rotate(360deg); opacity: 0; }
+}
+.photo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%; /* Round photo */
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  margin-bottom: 20px;
+}
+</style>
+</head>
+<body>
+<div class="character">🥰💖</div>
+
+<!-- Priya's Round Photo -->
+<img src="priya.jpg" alt="Priya" class="photo">
+
+<h1>Priya, will you be my Valentine?</h1>
+<div class="buttons">
+  <button class="yes" onclick="celebrate()">Yes</button>
+  <button class="no" onmouseover="moveButton(this)">No</button>
+</div>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+  <source src="nitesh.mp3" type="audio/mp3">
+</audio>
+
+<script>
+function moveButton(btn) {
+  const x = Math.floor(Math.random() * 200) - 100;
+  const y = Math.floor(Math.random() * 200) - 100;
+  btn.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+function celebrate() {
+  const msg = document.createElement('div');
+  msg.className = 'message';
+  msg.innerHTML = "Yay! ❤️ You said Yes!";
+  document.body.appendChild(msg);
+
+  setTimeout(() => msg.remove(), 3000);
+
+  for (let i = 0; i < 20; i++) {
+    createHeart();
+  }
+  for (let i = 0; i < 50; i++) {
+    createConfetti();
+  }
+}
+
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.innerHTML = '💖';
+  heart.style.left = Math.random() * window.innerWidth + 'px';
+  heart.style.top = window.innerHeight + 'px';
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 3000);
+}
+
+function createConfetti() {
+  const confetti = document.createElement('div');
+  confetti.className = 'confetti';
+  confetti.style.left = Math.random() * window.innerWidth + 'px';
+  confetti.style.top = '-10px';
+  confetti.style.backgroundColor = randomColor();
+  document.body.appendChild(confetti);
+
+  setTimeout(() => confetti.remove(), 3000);
+}
+
+function randomColor() {
+  const colors = ['#ff3366', '#4CAF50', '#FFD700', '#00BFFF', '#FF69B4'];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+// Try autoplay, if blocked show Play button
+window.addEventListener('load', () => {
+  const music = document.getElementById('bgMusic');
+  music.play().catch(() => {
+    const btn = document.createElement('button');
+    btn.innerHTML = "Play Music 🎵";
+    btn.style.padding = "10px 20px";
+    btn.style.fontSize = "18px";
+    btn.style.background = "#d6336c";
+    btn.style.color = "white";
+    btn.style.border = "none";
+    btn.style.borderRadius = "8px";
+    btn.style.cursor = "pointer";
+    btn.onclick = () => music.play();
+    document.body.appendChild(btn);
+  });
+});
+</script>
+</body>
+</html>
